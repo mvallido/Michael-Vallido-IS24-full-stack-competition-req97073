@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  db-postgres:
+    image: postgres:14
+    container_name: mv-IS24-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: 'dbIS24'
+      POSTGRES_USER: 'dbuser'
+      POSTGRES_PASSWORD: 'dbpass'
+      POSTGRES_SSLMODE: disable
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres-db:/var/lib/postgresql/data
+
+  backend:
+    container_name: mv-IS24-backend
+    restart: unless-stopped
+    image: is24-backend-test:1.0.0
+    build: 
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend:/app/backend
+    depends_on:
+      - db-postgres
+    command: ["npm", "run", "dev"]
+    environment:
+      - PGSSLMODE=disable
+
+  frontend:
+    container_name: mv-IS24-frontend
+    restart: unless-stopped
+    image: is24-frontend-test:1.0.0
+    build: 
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend:/app/frontend
+    depends_on:
+      - backend

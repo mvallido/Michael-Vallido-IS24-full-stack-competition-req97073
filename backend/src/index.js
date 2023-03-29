@@ -1,11 +1,43 @@
 const express = require('express');
 const { faker } = require('@faker-js/faker');
-const { sequelize } = require('../models/index')
+// const { sequelize } = require('../models/index')
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 let db = [];
+// Generating 40 products
+for (let i = 0; i < 40; i++) {
+  // Generate a random product ID
+  const productId = faker.datatype.uuid();
+
+  // Generate random product name, owner name, and scrum master name
+  const productName = faker.commerce.productName();
+  const productOwnerName = faker.name.fullName();
+  const scrumMasterName = faker.name.fullName();
+
+  // Generate an array of random developer names
+  const Developers = [];
+  for (let i = 0; i < 5; i++) {
+    Developers.push(faker.name.fullName());
+  }
+
+  // Generate a random start date
+  const startDate = faker.date.past(1).toISOString().substring(0, 10);
+
+  // Generate a random methodology
+  const methodology = faker.random.word();
+
+  db.push({
+    productId,
+    productName,
+    productOwnerName,
+    Developers,
+    scrumMasterName,
+    startDate,
+    methodology,
+  })
+}
 
 // Middleware to parse JSON request bodies
 app.use(express.json());

@@ -8,7 +8,6 @@ COPY package*.json ./
 
 # Install any needed packages specified in package.json
 RUN npm install
-RUN npm install --save-dev nodemon
 
 # Copy the rest of the app source code to the working directory
 COPY . .

@@ -27,8 +27,5 @@ COPY --from=0 /app/frontend/build ./build
 # Expose port 8080 for serving the app
 EXPOSE 8080
 
-# Install serve to run the app
-# RUN npm install -g serve
-
 # Start the app
 CMD ["npm", "start"]

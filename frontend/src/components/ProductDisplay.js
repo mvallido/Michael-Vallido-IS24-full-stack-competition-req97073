@@ -16,6 +16,7 @@ import ProductList from './ProductList';
 function ProductDisplay() {
   const [error, setError] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
+  const [searchCount, setSearchCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -41,6 +42,10 @@ function ProductDisplay() {
     setTotalCount((prevCount) => prevCount - 1);
   }
 
+  function handleSearchCount(count) {
+    setSearchCount(count)
+  }
+
   return (
     <div className="bg-white">
       <main className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
@@ -61,6 +66,7 @@ function ProductDisplay() {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
+          {searchQuery ? <div className="mt-2">Search Count: {searchCount}</div> : null}
         </div>
 
         <section aria-labelledby="products-heading" className="pb-24 pt-6">
@@ -69,6 +75,7 @@ function ProductDisplay() {
               <ProductList
                 searchQuery={searchQuery}
                 onProductDeleted={handleProductDeleted}
+                onSearch={handleSearchCount}
               />
             </div>
           </div>

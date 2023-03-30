@@ -14,7 +14,7 @@ function ProductList({ searchQuery, onProductDeleted, onSearch }) {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(9);
+  const [pageSize] = useState(9);
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
@@ -30,14 +30,14 @@ function ProductList({ searchQuery, onProductDeleted, onSearch }) {
         const json = await response.json();
         setProducts(json.items);
         setTotalCount(json.totalCount);
-        onSearch(json.items.length)
+        onSearch(json.items.length);
       } catch (error) {
         setError(error.message);
       }
     }
 
     fetchData();
-  }, [pageNumber, pageSize, searchQuery]);
+  }, [onSearch, pageNumber, pageSize, searchQuery]);
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -89,40 +89,37 @@ function ProductList({ searchQuery, onProductDeleted, onSearch }) {
           <nav>
             <ul class="flex pagination ">
               {pageNumber !== 1 ? (
-                <a
+                <div
                   className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                  href="#"
                   onClick={handlePrevPage}
                 >
                   Prev
-                </a>
+                </div>
               ) : null}
 
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (page) => (
                   <li class="mx-2 page-item" key={page}>
-                    <a
+                    <div
                       class={
                         page === pageNumber
                           ? 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
                           : 'relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
                       }
-                      href="#"
                       onClick={() => setPageNumber(page)}
                     >
                       {page}
-                    </a>
+                    </div>
                   </li>
                 )
               )}
               {pageNumber !== totalPages ? (
-                <a
+                <div
                   className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                  href="#"
                   onClick={handleNextPage}
                 >
                   Next
-                </a>
+                </div>
               ) : null}
             </ul>
           </nav>

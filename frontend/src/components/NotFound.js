@@ -12,12 +12,12 @@ function NotFound() {
         Page Not Found
       </div>
       <button class="mt-5">
-        <a class="relative inline-block text-sm font-medium text-[#db913e] group active:text-[#ffc96b] focus:outline-none focus:ring">
+        <div class="relative inline-block text-sm font-medium text-[#db913e] group active:text-[#ffc96b] focus:outline-none focus:ring">
           <span class="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-[#db913e] group-hover:translate-y-0 group-hover:translate-x-0"></span>
           <span class="relative block px-8 py-3 bg-[#013367] border border-current">
             <Link to="/">Go Home</Link>
           </span>
-        </a>
+        </div>
       </button>
     </main>
   );

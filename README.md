@@ -26,6 +26,9 @@ docker-compose up --build
 
 3. Open a web browser and go to http://localhost:8080 to access the app
 
+## Demo of build and app walkthrough
+https://user-images.githubusercontent.com/61817636/228977862-d86f3495-3948-4d17-a5ac-93ac408cfa36.mov
+
 ## Technologies Used
 - Node.js
 - Express

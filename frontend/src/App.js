@@ -1,9 +1,9 @@
-import { Route, Routes } from 'react-router-dom'
-import Home from './pages/Home'
-import ProductViewPage from './pages/ProductViewPage'
-import NotFoundPage from './pages/NotFoundPage'
-import ProductEditPage from './pages/ProductEditPage'
-import ProductCreatePage from './pages/ProductCreatePage'
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import ProductViewPage from './pages/ProductViewPage';
+import NotFoundPage from './pages/NotFoundPage';
+import ProductEditPage from './pages/ProductEditPage';
+import ProductCreatePage from './pages/ProductCreatePage';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

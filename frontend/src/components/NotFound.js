@@ -2,7 +2,7 @@
   Renders a 404 "Not Found" page
 */
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 function NotFound() {
   return (
@@ -20,7 +20,7 @@ function NotFound() {
         </a>
       </button>
     </main>
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;

@@ -1,6 +1,6 @@
-import React from 'react'
-import ProductDisplay from '../components/ProductDisplay'
-import Header from '../components/Header'
+import React from 'react';
+import ProductDisplay from '../components/ProductDisplay';
+import Header from '../components/Header';
 
 function Home() {
   return (
@@ -13,7 +13,7 @@ function Home() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

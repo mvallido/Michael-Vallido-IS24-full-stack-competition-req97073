@@ -1,5 +1,5 @@
-import ProductView from '../components/ProductView'
-import Header from '../components/Header'
+import ProductView from '../components/ProductView';
+import Header from '../components/Header';
 
 function ProductViewPage() {
   return (
@@ -10,7 +10,7 @@ function ProductViewPage() {
         <ProductView />
       </div>
     </div>
-  )
+  );
 }
 
-export default ProductViewPage
+export default ProductViewPage;

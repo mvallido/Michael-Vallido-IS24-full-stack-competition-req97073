@@ -13,44 +13,44 @@
   If this occurs, an error message is displayed to the user.
 */
 
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function ProductCreate() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [error, setError] = useState(null)
-  const [startDate, setStartDate] = useState('')
-  const [productName, setProductName] = useState('')
-  const [scrumMaster, setScrumMaster] = useState('')
-  const [productOwner, setProductOwner] = useState('')
-  const [developers, setDevelopers] = useState([])
-  const [methodology, setMethodology] = useState('')
+  const [error, setError] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [productName, setProductName] = useState('');
+  const [scrumMaster, setScrumMaster] = useState('');
+  const [productOwner, setProductOwner] = useState('');
+  const [developers, setDevelopers] = useState([]);
+  const [methodology, setMethodology] = useState('');
 
   const handleDeveloperChange = (event, index) => {
-    const newDevelopers = [...developers]
-    newDevelopers[index] = event.target.value
-    setDevelopers(newDevelopers)
-  }
+    const newDevelopers = [...developers];
+    newDevelopers[index] = event.target.value;
+    setDevelopers(newDevelopers);
+  };
 
   const handleAddDeveloper = () => {
     if (developers.length < 5) {
-      setDevelopers([...developers, ''])
+      setDevelopers([...developers, '']);
     }
-  }
+  };
 
   const handleRemoveDeveloper = (name) => {
-    setDevelopers((cur) => cur.filter((dev) => dev !== name))
-  }
+    setDevelopers((cur) => cur.filter((dev) => dev !== name));
+  };
 
   const handleMethodologyChange = (e) => {
-    setMethodology(e.target.value)
-  }
+    setMethodology(e.target.value);
+  };
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
       const response = await fetch(`http://localhost:3000/api/product/`, {
         method: 'POST',
@@ -65,16 +65,16 @@ function ProductCreate() {
           startDate: startDate,
           methodology: methodology,
         }),
-      })
-      const newProductId = await response.json()
-      navigate(`/product/${newProductId}`)
+      });
+      const newProductId = await response.json();
+      navigate(`/product/${newProductId}`);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     }
-  }
+  };
 
   if (error) {
-    return <div>Error: {error}</div>
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -202,7 +202,7 @@ function ProductCreate() {
         </div>
       </form>
     </>
-  )
+  );
 }
 
-export default ProductCreate
+export default ProductCreate;

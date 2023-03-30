@@ -2,33 +2,33 @@
   Renders product details fetched from the API. It also includes a link to edit the product. 
   It uses the useParams hook to get the productId parameter from the URL. If there is an error fetching data, it renders an error message. 
 */
-import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 function ProductView() {
-  const [product, setProduct] = useState({})
-  const [error, setError] = useState(null)
-  const { productId } = useParams()
+  const [product, setProduct] = useState({});
+  const [error, setError] = useState(null);
+  const { productId } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
           `http://localhost:3000/api/product/${productId}`
-        )
-        const json = await response.json()
-        setProduct(json)
-        console.log(json)
+        );
+        const json = await response.json();
+        setProduct(json);
+        console.log(json);
       } catch (error) {
-        setError(error.message)
+        setError(error.message);
       }
     }
 
-    fetchData()
-  }, [productId])
+    fetchData();
+  }, [productId]);
 
   if (error) {
-    return <div>Error: {error}</div>
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -100,7 +100,7 @@ function ProductView() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default ProductView
+export default ProductView;

@@ -7,49 +7,49 @@
   the pages of products. 
 */
 
-import { useState, useEffect } from 'react'
-import ProductCard from './ProductCard'
+import { useState, useEffect } from 'react';
+import ProductCard from './ProductCard';
 
 function ProductList({ searchQuery, onProductDeleted }) {
-  const [products, setProducts] = useState([])
-  const [error, setError] = useState(null)
-  const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize, setPageSize] = useState(9)
-  const [totalCount, setTotalCount] = useState(0)
-  console.log(searchQuery)
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(9);
+  const [totalCount, setTotalCount] = useState(0);
+  console.log(searchQuery);
   useEffect(() => {
     async function fetchData() {
       try {
-        let url = 'http://localhost:3000/api/product'
+        let url = 'http://localhost:3000/api/product';
         if (searchQuery) {
-          url += `?search=${searchQuery}`
+          url += `?search=${searchQuery}`;
         } else {
-          url += `?pageNumber=${pageNumber}&pageSize=${pageSize}`
+          url += `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
         }
-        const response = await fetch(url)
-        const json = await response.json()
-        setProducts(json.items)
-        setTotalCount(json.totalCount)
+        const response = await fetch(url);
+        const json = await response.json();
+        setProducts(json.items);
+        setTotalCount(json.totalCount);
       } catch (error) {
-        setError(error.message)
+        setError(error.message);
       }
     }
 
-    fetchData()
-  }, [pageNumber, pageSize, searchQuery])
+    fetchData();
+  }, [pageNumber, pageSize, searchQuery]);
 
   if (error) {
-    return <div>Error: {error}</div>
+    return <div>Error: {error}</div>;
   }
 
-  const totalPages = Math.ceil(totalCount / pageSize)
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   function handlePrevPage() {
-    setPageNumber(Math.max(pageNumber - 1, 1))
+    setPageNumber(Math.max(pageNumber - 1, 1));
   }
 
   function handleNextPage() {
-    setPageNumber(Math.min(pageNumber + 1, totalPages))
+    setPageNumber(Math.min(pageNumber + 1, totalPages));
   }
 
   const handleDeleteProduct = async (productId) => {
@@ -57,19 +57,19 @@ function ProductList({ searchQuery, onProductDeleted }) {
       const response = await fetch(
         `http://localhost:3000/api/product/${productId}`,
         { method: 'DELETE' }
-      )
+      );
       if (response.ok) {
-        onProductDeleted()
+        onProductDeleted();
         const updatedProducts = products.filter(
           (product) => product.productId !== productId
-        )
-        setProducts(updatedProducts)
-        setTotalCount(totalCount - 1)
+        );
+        setProducts(updatedProducts);
+        setTotalCount(totalCount - 1);
       }
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     }
-  }
+  };
 
   return (
     <>
@@ -128,7 +128,7 @@ function ProductList({ searchQuery, onProductDeleted }) {
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default ProductList
+export default ProductList;

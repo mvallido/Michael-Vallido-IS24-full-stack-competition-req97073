@@ -1,5 +1,5 @@
-import ProductEdit from '../components/ProductEdit'
-import Header from '../components/Header'
+import ProductEdit from '../components/ProductEdit';
+import Header from '../components/Header';
 
 function ProductEditPage() {
   return (
@@ -10,7 +10,7 @@ function ProductEditPage() {
         <ProductEdit />
       </div>
     </div>
-  )
+  );
 }
 
-export default ProductEditPage
+export default ProductEditPage;

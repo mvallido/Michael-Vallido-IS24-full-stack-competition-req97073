@@ -1,6 +1,6 @@
-import React from 'react'
-import Header from '../components/Header'
-import NotFound from '../components/NotFound'
+import React from 'react';
+import Header from '../components/Header';
+import NotFound from '../components/NotFound';
 
 function NotFoundPage() {
   return (
@@ -8,7 +8,7 @@ function NotFoundPage() {
       <Header />
       <NotFound />
     </>
-  )
+  );
 }
 
-export default NotFoundPage
+export default NotFoundPage;

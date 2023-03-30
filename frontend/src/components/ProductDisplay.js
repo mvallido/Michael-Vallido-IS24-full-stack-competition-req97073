@@ -8,37 +8,37 @@
   component that takes in the "searchQuery" and a function to be called when a product is deleted.
 */
 
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import Search from './Search'
-import ProductList from './ProductList'
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Search from './Search';
+import ProductList from './ProductList';
 
 function ProductDisplay() {
-  const [error, setError] = useState(null)
-  const [totalCount, setTotalCount] = useState(0)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [error, setError] = useState(null);
+  const [totalCount, setTotalCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`http://localhost:3000/api/product`)
-        const json = await response.json()
-        setTotalCount(json.totalCount)
+        const response = await fetch(`http://localhost:3000/api/product`);
+        const json = await response.json();
+        setTotalCount(json.totalCount);
       } catch (error) {
-        setError(error.message)
+        setError(error.message);
       }
     }
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   if (error) {
-    return <div>Error: {error}</div>
+    return <div>Error: {error}</div>;
   }
 
   function handleProductDeleted() {
     // Decrement the product count when a product is deleted
-    setTotalCount((prevCount) => prevCount - 1)
+    setTotalCount((prevCount) => prevCount - 1);
   }
 
   return (
@@ -75,7 +75,7 @@ function ProductDisplay() {
         </section>
       </main>
     </div>
-  )
+  );
 }
 
-export default ProductDisplay
+export default ProductDisplay;

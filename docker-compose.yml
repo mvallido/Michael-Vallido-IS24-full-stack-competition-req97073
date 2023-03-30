@@ -26,6 +26,7 @@ services:
       - 3000:3000
     volumes:
       - ./backend:/app/backend
+      - /app/backend/node_modules
     # depends_on:
     #   - db-postgres
     command: ["npm", "run", "dev"]
@@ -43,5 +44,6 @@ services:
       - 8080:8080
     volumes:
       - ./frontend:/app/frontend
+      - /app/frontend/node_modules
     depends_on:
       - backend

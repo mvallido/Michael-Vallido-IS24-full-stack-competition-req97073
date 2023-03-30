@@ -10,13 +10,13 @@
 import { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
 
-function ProductList({ searchQuery, onProductDeleted }) {
+function ProductList({ searchQuery, onProductDeleted, onSearch }) {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(9);
   const [totalCount, setTotalCount] = useState(0);
-  console.log(searchQuery);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -30,6 +30,7 @@ function ProductList({ searchQuery, onProductDeleted }) {
         const json = await response.json();
         setProducts(json.items);
         setTotalCount(json.totalCount);
+        onSearch(json.items.length)
       } catch (error) {
         setError(error.message);
       }

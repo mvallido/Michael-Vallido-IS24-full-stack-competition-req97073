@@ -1,8 +1,8 @@
 function Search({ searchQuery, setSearchQuery }) {
   const handleChange = (event) => {
-    console.log(event.target.value)
-    setSearchQuery(event.target.value)
-  }
+    console.log(event.target.value);
+    setSearchQuery(event.target.value);
+  };
 
   return (
     <div className="relative">
@@ -19,7 +19,7 @@ function Search({ searchQuery, setSearchQuery }) {
         onChange={handleChange}
       />
     </div>
-  )
+  );
 }
 
-export default Search
+export default Search;

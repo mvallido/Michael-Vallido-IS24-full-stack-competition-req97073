@@ -10,12 +10,12 @@
   user to the view and edit pages of the product.
 */
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 function ProductCard({ product, onDelete }) {
   const handleDelete = () => {
-    onDelete(product.productId)
-  }
+    onDelete(product.productId);
+  };
 
   return (
     <div className="rounded overflow-hidden shadow-md">
@@ -87,7 +87,7 @@ function ProductCard({ product, onDelete }) {
         </dl>
       </div>
     </div>
-  )
+  );
 }
 
-export default ProductCard
+export default ProductCard;

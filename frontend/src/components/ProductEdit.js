@@ -8,67 +8,67 @@
   to the home page or view the product. 
 */
 
-import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 function ProductEdit() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
 
-  const [startDate, setStartDate] = useState('')
-  const [productName, setProductName] = useState('')
-  const [productOwner, setProductOwner] = useState('')
-  const [developers, setDevelopers] = useState([])
-  const [scrumMaster, setScrumMaster] = useState('')
-  const [methodology, setMethodology] = useState('')
+  const [startDate, setStartDate] = useState('');
+  const [productName, setProductName] = useState('');
+  const [productOwner, setProductOwner] = useState('');
+  const [developers, setDevelopers] = useState([]);
+  const [scrumMaster, setScrumMaster] = useState('');
+  const [methodology, setMethodology] = useState('');
 
-  const { productId } = useParams()
+  const { productId } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
           `http://localhost:3000/api/product/${productId}`
-        )
-        const json = await response.json()
+        );
+        const json = await response.json();
 
-        setStartDate(json.startDate)
-        setProductName(json.productName)
-        setProductOwner(json.productOwnerName)
-        setDevelopers(json.Developers)
-        setScrumMaster(json.scrumMasterName)
-        setMethodology(json.methodology)
+        setStartDate(json.startDate);
+        setProductName(json.productName);
+        setProductOwner(json.productOwnerName);
+        setDevelopers(json.Developers);
+        setScrumMaster(json.scrumMasterName);
+        setMethodology(json.methodology);
       } catch (error) {
-        setError(error.message)
+        setError(error.message);
       }
     }
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const handleDeveloperChange = (event, index) => {
-    const newDevelopers = [...developers]
-    newDevelopers[index] = event.target.value
-    setDevelopers(newDevelopers)
-  }
+    const newDevelopers = [...developers];
+    newDevelopers[index] = event.target.value;
+    setDevelopers(newDevelopers);
+  };
 
   const handleAddDeveloper = () => {
     if (developers.length < 5) {
-      setDevelopers([...developers, ''])
+      setDevelopers([...developers, '']);
     }
-  }
+  };
 
   const handleRemoveDeveloper = (name) => {
-    setDevelopers((cur) => cur.filter((dev) => dev !== name))
-  }
+    setDevelopers((cur) => cur.filter((dev) => dev !== name));
+  };
 
   const handleMethodologyChange = (e) => {
-    setMethodology(e.target.value)
-  }
+    setMethodology(e.target.value);
+  };
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
       await fetch(`http://localhost:3000/api/product/${productId}`, {
         method: 'PUT',
@@ -82,15 +82,15 @@ function ProductEdit() {
           scrumMasterName: scrumMaster,
           methodology: methodology,
         }),
-      })
-      navigate(`/product/${productId}`)
+      });
+      navigate(`/product/${productId}`);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     }
-  }
+  };
 
   if (error) {
-    return <div>Error: {error}</div>
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -222,7 +222,7 @@ function ProductEdit() {
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-export default ProductEdit
+export default ProductEdit;

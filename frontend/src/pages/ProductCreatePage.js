@@ -1,5 +1,5 @@
-import ProductCreate from '../components/ProductCreate'
-import Header from '../components/Header'
+import ProductCreate from '../components/ProductCreate';
+import Header from '../components/Header';
 
 function ProductCreatePage() {
   return (
@@ -10,7 +10,7 @@ function ProductCreatePage() {
         <ProductCreate />
       </div>
     </div>
-  )
+  );
 }
 
-export default ProductCreatePage
+export default ProductCreatePage;

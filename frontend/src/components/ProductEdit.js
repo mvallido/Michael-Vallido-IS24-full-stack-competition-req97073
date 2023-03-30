@@ -45,7 +45,7 @@ function ProductEdit() {
     }
 
     fetchData();
-  }, []);
+  }, [productId]);
 
   const handleDeveloperChange = (event, index) => {
     const newDevelopers = [...developers];

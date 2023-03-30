@@ -43,7 +43,7 @@ function ProductDisplay() {
   }
 
   function handleSearchCount(count) {
-    setSearchCount(count)
+    setSearchCount(count);
   }
 
   return (
@@ -66,7 +66,9 @@ function ProductDisplay() {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
-          {searchQuery ? <div className="mt-2">Search Count: {searchCount}</div> : null}
+          {searchQuery ? (
+            <div className="mt-2">Search Count: {searchCount}</div>
+          ) : null}
         </div>
 
         <section aria-labelledby="products-heading" className="pb-24 pt-6">

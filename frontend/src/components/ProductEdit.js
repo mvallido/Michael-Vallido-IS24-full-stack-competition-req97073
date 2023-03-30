@@ -117,6 +117,7 @@ function ProductEdit() {
               </dt>
               <div className="mt-2">
                 <input
+                  required
                   type="text"
                   name="product-name"
                   id="product-name"
@@ -131,6 +132,7 @@ function ProductEdit() {
                 Scrum Master
               </dt>
               <input
+                required
                 type="text"
                 name="scrum-master"
                 id="scrum-master"
@@ -144,6 +146,7 @@ function ProductEdit() {
                 Product Owner
               </dt>
               <input
+                required
                 type="text"
                 name="product-owner"
                 id="product-owner"
@@ -161,6 +164,7 @@ function ProductEdit() {
                 {developers.map((developer, index) => (
                   <div key={index} className="flex my-2">
                     <input
+                      required
                       key={index}
                       type="text"
                       name="developers"
@@ -199,6 +203,7 @@ function ProductEdit() {
               <dt className="text-sm font-medium text-gray-500">Methodology</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 <select
+                  required
                   id="methodology"
                   name="methodology"
                   value={methodology}

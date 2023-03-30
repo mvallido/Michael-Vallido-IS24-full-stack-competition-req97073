@@ -135,6 +135,7 @@ function ProductCreate() {
                 {developers.map((developer, index) => (
                   <div key={index} className="flex my-2">
                     <input
+                      required
                       key={index}
                       type="text"
                       name="developers"

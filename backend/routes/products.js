@@ -175,7 +175,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const new_product = req.body;
-  new_product.productId = faker.datatype.uuid();
+  new_product.productId = faker.datatype.uuid().substring(0, 8);
   new_product.startDate = new Date(new_product.startDate)
     .toISOString()
     .split('T')[0];

@@ -1,7 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const { faker } = require('@faker-js/faker');
-const { sequelize } = require('../models/index')
+const swaggerjsdoc = require('swagger-jsdoc')
+const swaggerui = require('swagger-ui-express')
+const swaggerOptions = require('../swaggerOptions')
+const productRoutes = require('../routes/products')
+const healthRoutes = require('../routes/health')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,158 +15,13 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-let db = [];
-
-// Generating 40 products
-for (let i = 0; i < 40; i++) {
-  // Generate a random product ID
-  const productId = faker.datatype.uuid();
-
-  // Generate random product name, owner name, and scrum master name
-  const productName = faker.commerce.productName();
-  const productOwnerName = faker.name.fullName();
-  const scrumMasterName = faker.name.fullName();
-
-  // Generate an array of random developer names
-  const Developers = [];
-  for (let i = 0; i < 5; i++) {
-    Developers.push(faker.name.fullName());
-  }
-
-  // Generate a random start date
-  const startDate = faker.date.past(1).toISOString().substring(0, 10);
-
-  // Generate a random methodology
-  const methodology = faker.random.word();
-
-  db.push({
-    productId,
-    productName,
-    productOwnerName,
-    Developers,
-    scrumMasterName,
-    startDate,
-    methodology,
-  })
-}
-
 app.use(express.json());
 
-app.get('/health', (req, res) => {
-  if(isHealthy()){
-    res.status(200).send('API component is healthy');
-  }else{
-    res.status(500).send('API component is not healthy');
-  }
-});
+app.use('/health', healthRoutes);
 
-app.get('/api/product', (req, res) => {
-  const pageSize = parseInt(req.query.pageSize) || 10; // default to 10
-  const pageNumber = parseInt(req.query.pageNumber) || 1; // default to 1
-  const startIndex = (pageNumber - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  let products = db;
+app.use('/api/product', productRoutes);
 
-  // Filter products by search query
-  const searchQuery = req.query.search;
-  if (searchQuery) {
-    products = db.filter(product => {
-      const scrumMasterName = product.scrumMasterName.toLowerCase();
-      const developerNames = Array.isArray(product.Developers) ? product.Developers.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase())) : [];
-      return scrumMasterName.includes(searchQuery.toLowerCase()) || developerNames.length > 0;
-    });
-  }
-
-  // Get paginated products
-  products = products.slice(startIndex, endIndex);
-
-  const hidePagination = !!searchQuery; // Add flag to indicate whether pagination should be displayed or not
-
-  res.json({
-    totalCount: db.length,
-    pageNumber,
-    pageSize,
-    items: products,
-    hidePagination // Add the flag to the response object
-  });
-})
-
-app.post('/api/product', (req, res) => {
-  const new_product = req.body;
-  new_product.productId = faker.datatype.uuid();
-  new_product.startDate = new Date(new_product.startDate).toISOString().split('T')[0];
-  db.push(new_product);
-  res.json(new_product.productId);
-});
-
-app.get('/api/product/:productId', (req, res) => {
-  const productId = req.params.productId;
-  const productIndex = db.findIndex(p => p.productId === productId);
-  if (productIndex === -1) {
-    res.sendStatus(404);
-  } else {
-    res.json(db[productIndex]);
-  }
-});
-
-app.put('/api/product/:productId', (req, res) => {
-  const productId = req.params.productId;
-  const productIndex = db.findIndex(p => p.productId === productId);
-  if (productIndex === -1) {
-    res.sendStatus(404);
-  } else {
-    db[productIndex] = { ...db[productIndex], ...req.body };
-    res.json(db[productIndex]);
-  }
-});
-
-app.delete('/api/product/:productId', (req, res) => {
-  const productId = req.params.productId;
-  const productIndex = db.findIndex(p => p.productId === productId);
-
-  if (productIndex === -1) {
-    res.sendStatus(404);
-  } else {
-    db.splice(productIndex, 1);
-    res.sendStatus(204);
-  }
-});
+const swaggerDocs = swaggerjsdoc(swaggerOptions);
+app.use('/api/api-docs', swaggerui.serve, swaggerui.setup(swaggerDocs));
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
-
-const connectDb = async () => {
-  console.log('Checking database connection...')
-  try {
-    await sequelize.authenticate()
-    console.log('Connection to Postgres has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-}
-
-
-function isHealthy() {
-  // Check if the database connection is healthy
-  try {
-    // Connecting to database
-    // connectDb()
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-    return false;
-  }
-
-  // Check if any other dependencies are healthy
-  // For example, check if an external API is reachable and responding as expected
-
-  // If everything is healthy, return true
-  return true;
-}
-
-// (async () => {
-//   await connectDb()
-//   app.get('/', (req, res) => {
-//     res.send("Root");
-//   });
-//   app.use('/api/test', require('../routes/users'));
-//   app.listen(port, () => console.log(`Server started on port ${port}`));
-// })();

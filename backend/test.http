@@ -1,4 +1,6 @@
-GET http://localhost:3000/api/product/
+# GET http://localhost:3000/api/product/
+
+# GET http://localhost:3000/api/product?_start=1&_end=4
 
 # POST http://localhost:3000/api/product
 # Content-Type: application/json
@@ -24,4 +26,4 @@ GET http://localhost:3000/api/product/
 #   "productOwnerName": "New Product Owner Name"
 # }
 
-DELETE http://localhost:3000/api/product/456
+# DELETE http://localhost:3000/api/product/456

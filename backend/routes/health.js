@@ -1,6 +1,6 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
-const { sequelize } = require('../models/index')
+const { sequelize } = require('../models/index');
 
 /**
  * @swagger
@@ -26,39 +26,38 @@ const { sequelize } = require('../models/index')
  */
 
 router.get('/', (req, res) => {
-    if (isHealthy()) {
-        res.status(200).send('API component is healthy');
-    } else {
-        res.status(500).send('API component is not healthy');
-    }
+  if (isHealthy()) {
+    res.status(200).send('API component is healthy');
+  } else {
+    res.status(500).send('API component is not healthy');
+  }
 });
 
 const connectDb = async () => {
-    console.log('Checking database connection...')
-    try {
-        await sequelize.authenticate()
-        console.log('Connection to Postgres has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
-
+  console.log('Checking database connection...');
+  try {
+    await sequelize.authenticate();
+    console.log('Connection to Postgres has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+};
 
 function isHealthy() {
-    // Check if the database connection is healthy
-    try {
-        // Connecting to database
-        // connectDb()
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-        return false;
-    }
+  // Check if the database connection is healthy
+  try {
+    // Connecting to database
+    // connectDb()
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+    return false;
+  }
 
-    // Check if any other dependencies are healthy
-    // For example, check if an external API is reachable and responding as expected
+  // Check if any other dependencies are healthy
+  // For example, check if an external API is reachable and responding as expected
 
-    // If everything is healthy, return true
-    return true;
+  // If everything is healthy, return true
+  return true;
 }
 
 module.exports = router;

@@ -1,10 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const swaggerjsdoc = require('swagger-jsdoc')
-const swaggerui = require('swagger-ui-express')
-const swaggerOptions = require('../swaggerOptions')
-const productRoutes = require('../routes/products')
-const healthRoutes = require('../routes/health')
+const swaggerjsdoc = require('swagger-jsdoc');
+const swaggerui = require('swagger-ui-express');
+const swaggerOptions = require('../swaggerOptions');
+const productRoutes = require('../routes/products');
+const healthRoutes = require('../routes/health');
 
 const app = express();
 const port = process.env.PORT || 3000;

@@ -30,6 +30,7 @@ docker-compose up --build
 - Node.js
 - Express
 - React
+- Tailwind CSS
 - Docker
 - Swagger
 

@@ -1,12 +1,14 @@
 import React from 'react'
 import Header from '../components/Header'
+import NotFound from '../components/NotFound'
 
-function NotFound() {
+function NotFoundPage() {
   return (
     <>
       <Header />
+      <NotFound />
     </>
   )
 }
 
-export default NotFound
+export default NotFoundPage

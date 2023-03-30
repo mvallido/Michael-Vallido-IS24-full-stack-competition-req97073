@@ -1,8 +1,8 @@
 function Search({ searchQuery, setSearchQuery }) {
   const handleChange = (event) => {
     console.log(event.target.value)
-    setSearchQuery(event.target.value);
-  };
+    setSearchQuery(event.target.value)
+  }
 
   return (
     <div className="relative">

@@ -1,46 +1,22 @@
-import './App.css';
-import { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import ProductViewPage from './pages/ProductViewPage';
+import NotFound from './pages/NotFound';
+import ProductEditPage from './pages/ProductEditPage';
+import ProductCreatePage from './pages/ProductCreatePage'
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch('http://localhost:3000/api/product');
-        const json = await response.json();
-        setProducts(json);
-      } catch (error) {
-        setError(error.message);
-      }
-    }
-
-    fetchData();
-  }, []);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-  
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world
-      </h1>
-      {products ? (
-        <ul>
-          {products.map((product) => (
-            <li key={product.productId}>
-              {product.productName} - {product.productOwnerName}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading products...</p>
-      )}
-    </>
-
+    <Routes>
+      <Route path="/" element={<Home />}/>
+      <Route path="/product">
+        <Route index  element={<Home />} />
+        <Route path=":productId" element={<ProductViewPage />}/>
+        <Route path=":productId/edit" element={<ProductEditPage />}/>
+        <Route path="new" element={<ProductCreatePage />}/>
+      </Route>      
+      <Route path="*" element={<NotFound />}/>
+    </Routes>
   );
 }
 

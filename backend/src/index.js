@@ -58,13 +58,52 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/api/product', (req, res) => {
-  res.json(db);
-});
+  const pageSize = parseInt(req.query.pageSize) || 10; // default to 10
+  const pageNumber = parseInt(req.query.pageNumber) || 1; // default to 1
+  const startIndex = (pageNumber - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  let products = db;
+
+  // Filter products by search query
+  const searchQuery = req.query.search;
+  if (searchQuery) {
+    products = db.filter(product => {
+      const scrumMasterName = product.scrumMasterName.toLowerCase();
+      const developerNames = Array.isArray(product.Developers) ? product.Developers.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase())) : [];
+      return scrumMasterName.includes(searchQuery.toLowerCase()) || developerNames.length > 0;
+    });
+  }
+
+  // Get paginated products
+  products = products.slice(startIndex, endIndex);
+
+  const hidePagination = !!searchQuery; // Add flag to indicate whether pagination should be displayed or not
+
+  res.json({
+    totalCount: db.length,
+    pageNumber,
+    pageSize,
+    items: products,
+    hidePagination // Add the flag to the response object
+  });
+})
 
 app.post('/api/product', (req, res) => {
   const new_product = req.body;
+  new_product.productId = faker.datatype.uuid();
+  new_product.startDate = new Date(new_product.startDate).toISOString().split('T')[0];
   db.push(new_product);
-  res.json(new_product);
+  res.json(new_product.productId);
+});
+
+app.get('/api/product/:productId', (req, res) => {
+  const productId = req.params.productId;
+  const productIndex = db.findIndex(p => p.productId === productId);
+  if (productIndex === -1) {
+    res.sendStatus(404);
+  } else {
+    res.json(db[productIndex]);
+  }
 });
 
 app.put('/api/product/:productId', (req, res) => {
